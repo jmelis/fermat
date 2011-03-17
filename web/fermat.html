@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="es">
+<head>
+	<link rel="stylesheet" href="stylesheets/fermat.css" type="text/css" />
+	<script src="javascripts/jquery.min.js"></script> 
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>La Habitación de Fermat</title>
+</head>
+<body>
+	<div id="scroll">
+		<p></p>
+		<p></p>
+		<p></p>
+	</div>
+	<div id="wrapper">
+		<div id="window-top"></div>
+		<div id="window-content">
+			<div id="left-column">
+				<div class="round-border top">
+					<div id="webcam">
+						<div id="flashContent"> 
+							<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="380" height="304" id="webcam" align="middle"> 
+								<param name="movie" value="images/webcam.swf" /> 
+								<param name="quality" value="high" /> 
+								<param name="bgcolor" value="#ffffff" /> 
+								<param name="play" value="true" /> 
+								<param name="loop" value="true" /> 
+								<param name="wmode" value="window" /> 
+								<param name="scale" value="showall" /> 
+								<param name="menu" value="true" /> 
+								<param name="devicefont" value="false" /> 
+								<param name="salign" value="" /> 
+								<param name="allowScriptAccess" value="sameDomain" /> 
+								<!--[if !IE]>--> 
+								<object type="application/x-shockwave-flash" data="images/webcam.swf" width="380" height="304"> 
+									<param name="movie" value="images/webcam.swf" /> 
+									<param name="quality" value="high" /> 
+									<param name="bgcolor" value="#ffffff" /> 
+									<param name="play" value="true" /> 
+									<param name="loop" value="true" /> 
+									<param name="wmode" value="window" /> 
+									<param name="scale" value="showall" /> 
+									<param name="menu" value="true" /> 
+									<param name="devicefont" value="false" /> 
+									<param name="salign" value="" /> 
+									<param name="allowScriptAccess" value="sameDomain" /> 
+								<!--<![endif]--> 
+									<a href="http://www.adobe.com/go/getflash"> 
+										<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /> 
+									</a> 
+								<!--[if !IE]>--> 
+								</object> 
+								<!--<![endif]--> 
+							</object>
+						</div>
+					</div>
+				</div>
+				<div id="code-input" class="round-border">
+					<form action="fermat_submit" method="get" accept-charset="utf-8">
+							<input id="code-text" type="text" name="code" placeholder="Introduce el código o respuesta...">
+							<div id="code-submit">OK</div>
+							<div class="clear"></div>
+					</form>
+				</div>
+			</div>
+			<div id="right-column">
+				<div class="round-border top">
+					<div id="geogebra" class="frame">
+						
+					</div>
+				</div>
+				<div class="round-border">
+					<div id="statement" class="frame" >
+						
+					</div>
+				</div>
+			</div>
+			<div class="clear"></div>
+		</div>
+		<div id="window-bottom"></div>
+	</div>
+</body>
+</html>
