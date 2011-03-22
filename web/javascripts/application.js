@@ -1,5 +1,6 @@
 var GAME_DURATION = 600;
 var WINNING_QUESTIONS = 3;
+var MAX_TRIES = 3;
 
 var timer = {};
 
@@ -8,13 +9,20 @@ var questions=[
 		file: "acertijo2.ggb",
 		answer: 2002,
 		kind: "geogebra",
-		text: "En la pantalla de arriba puedes ver cuatro vistas diferentes de un mismo cubo. coloca la cara que falta en la cuarta vista con el color que le corresponde"
+		text: "En la pantalla de arriba puedes ver cuatro vistas diferentes de un mismo cubo. Coloca la cara que falta en la cuarta vista con el color que le corresponde."
+	},
+	{
+		file: "ACERTIJO_3.ggb",
+		answer: 2002,
+		kind: "geogebra",
+		text: "Arrastra hasta el hueco gris el cubo resultante al doblar la figura formada por los seis cuadrados de colores.Cuando lo hayas colocado, aparecerá un código."
 	}
 ];
 
 var question;
 
 var right_answers;
+var current_tries;
 
 
 
@@ -39,7 +47,6 @@ var app = {
 		});
 		
 		//ocultar calavera
-		//poner la maqueta en el estado inicial
 	},
 	
 	showScrollOnStartButtonClick: function(){
@@ -97,6 +104,7 @@ var app = {
 	},
 	
 	loadQuestion: function(){
+		current_tries = 0;
 		question = questions.pop();
 		app.questionLoader(question);
 	},
@@ -109,31 +117,50 @@ var app = {
 	
 	die: function(){
 		alert('LA HAS PALMAO');
+		//parar timers
 	},
 	
 	setupListeners: function(){
-		$('#fermat_submit').submit(function() {
-			if(question.answer == $('#code_text').value()){
-				
+		$('#code-submit').click(function() {
+			// question answered right
+			if(question.answer == $('#code-text').val()){
 				right_answers++;
+				// player wins
 				if(right_answers == WINNING_QUESTIONS){
 					//arduino go back to initial position
 					app.win();
 				}
+				//player hasnt won yet
 				else{
 					//arduino stop 30s
-					app.loadQuestion();
-					setTimeout("app.reactivateTimer()",30000);
-				}
-					
+					$('#information-display p').css({color:'green'}).html('¡Respuesta correcta! ' + (WINNING_QUESTIONS- right_answers) + ' más para ganar.').fadeIn(500).fadeOut(3000,function() {
+						$('#code-text').val("");
+						app.loadQuestion();
+						setTimeout("app.reactivateTimer()",30000);
+					});					
+				}		
 			}
+			// question answered wrong
 			else{
-				$('')
-			}
-				
+				current_tries ++;
+				// too many tries
+				if(current_tries == 3){
+					$('#information-display p').css({color:'red'}).html('¡Demasiados fallos, siguiente pregunta!').fadeIn(500).fadeOut(3000,function() {
+						$('#code-text').val("");
+						app.loadQuestion();
+						//pone contador marcha atras de 30s por haber fallado
+					});					
+				}
+				// still trying
+				else{
+					$('#code-text').val("");
+					$('#information-display p').css({color:'red'}).html('¡Respuesta incorrecta! Penalización de 30 s').fadeIn(500).fadeOut(3000);
+				}
+			}	
 			return false;
 		});
 	},
+	
 	// private
 	questionLoader: function(question) {
 		switch(question.kind)
@@ -141,7 +168,7 @@ var app = {
 		case "geogebra":
 		  visual_code = '	<applet name="ggbApplet" code="geogebra.GeoGebraApplet" archive="questions/geogebra.jar"\
 				codebase="./"\
-				width="470" height="304"mayscript="true">\
+				width="470" height="305"mayscript="true">\
 				<param name="filename" value="questions/' + question.file + '"/>\
 				<param name="java_arguments" value="-Xmx512m -Djnlp.packEnabled=true" />\
 				<param name="cache_archive" value="questions/geogebra.jar, questions/geogebra_main.jar, questions/geogebra_gui.jar, questions/geogebra_cas.jar, questions/geogebra_export.jar, questions/geogebra_properties.jar" />\

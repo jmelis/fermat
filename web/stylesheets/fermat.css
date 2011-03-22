@@ -15,8 +15,10 @@ body{
 	margin:0;
 	background-color:#D4E0EC;
 	font-family:"Lucida Grande", "Helvetica", "Arial", sans-serif;
+	font-size:14px;
 	overflow: hidden;
 }
+
 
 #wrapper{
 	position:relative;
@@ -110,14 +112,19 @@ body{
 			}
 		
 				#webcam{
-					height:304px; /* DELETE ALL HEIGHTS */
+					height:305px; /* DELETE ALL HEIGHTS */
 				}
 			
 				#code-input{
-					height:38px;
-					padding: 40px 33px;
+					height:118px;
+					padding: 0px 33px;
 				}
-				
+					#information-display{
+						height:30px;
+						padding:5px 5px 5px 0;
+					}
+					
+					
 					#code-text{
 						width:270px;
 						height:35px;
@@ -152,17 +159,25 @@ body{
 		
 			#right-column{
 				float:right;
-				width:496px;
+				width:494px;
 			}
 			
 				#visual{
-					height:302px;
+					height:305px;
 				}
 				
 			
 				#statement{
 					height:92px;
+					border:1px solid #919191;
 				}
+					
+					#statement p{
+						font-size:12px;
+						padding: 0;
+						margin: 5px;
+						text-align: justify;
+					}
 	
 		#window-bottom{
 			height:31px;
@@ -176,7 +191,6 @@ body{
 }
 
 .frame{
-	border:1px solid #919191;
 	background-color:#FEFEFE;
 }
 
