@@ -1,4 +1,5 @@
 var GAME_DURATION = 600;
+var FAIL_PENALTY = 30;
 var WINNING_QUESTIONS = 3;
 var MAX_TRIES = 3;
 
@@ -155,6 +156,11 @@ var app = {
 				else{
 					$('#code-text').val("");
 					$('#information-display p').css({color:'red'}).html('¡Respuesta incorrecta! Penalización de 30 s').fadeIn(500).fadeOut(3000);
+					$('#progressbar').everyTime(500,'gameTimer',function(i) {
+						$(this).progressbar({
+							value: i/60*100
+						}, 60);
+					});
 				}
 			}	
 			return false;
@@ -213,7 +219,19 @@ var app = {
 
 
 $(document).ready(function(){
-	app.gameBegin();
-	app.showScrollOnStartButtonClick();
-	app.showGameConsoleOnArrowClick();
+	//app.gameBegin();
+	//app.showScrollOnStartButtonClick();
+	//app.showGameConsoleOnArrowClick();
+	var stepDelay = 1000;
+	$('#progressbar').everyTime(stepDelay,'penaltyTimer',function(i) {
+		console.log(i);
+		$(this).progressbar({
+			value: 100 - i/(300)*stepDelay
+		}, 30000/stepDelay);
+	});
+	$('#scroll-wrapper').hide();
+	$('#game-console-wrapper').show();
+	$('#start-wrapper').hide();
+	$('form').hide();
+	$('#progressbar').show();
 });
