@@ -7,25 +7,26 @@
 	<link rel="stylesheet" href="stylesheets/jquery-ui.css" type="text/css" />
 	<script src="javascripts/jquery.min.js"></script>
 	<script src="javascripts/jquery.timers.js"></script>
-	<script src="javascripts/jquery.ui.core.js"></script> 
-	<script src="javascripts/jquery.ui.widget.js"></script> 
+	<script src="javascripts/jquery.ui.core.js"></script>
+	<script src="javascripts/jquery.ui.widget.js"></script>
 	<script src="javascripts/jquery.ui.progressbar.js"></script>
+	<script src="javascripts/arduino.js"></script>
 	<script src="javascripts/application.js"></script>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>La Habitación de Fermat</title>
 </head>
 <body>
 	<div id="wrapper">
-		
-		
+
+
 		<div id="start-wrapper" class="container">
 				<div id="start">
 					<img src="images/start-bg.png" />
 					<div id="button"></div>
 				</div>
 		</div>
-		
-		
+
+
 		<div id="scroll-wrapper" class="container">
 			<div id="scroll">
 				<p>Has recibido una carta anónima citándote en un viejo almacén.</p>
@@ -34,8 +35,8 @@
 				<p id="right-arrow" title="Comenzar la partida"><span>&rarr;</span></p>
 			</div>
 		</div>
-		
-		
+
+
 		<div id="game-console-wrapper" class="container">
 			<div id="game-console">
 				<div id="window-top"></div>
@@ -43,7 +44,7 @@
 					<div id="left-column">
 						<div class="round-border top">
 							<div id="webcam">
-								<div id="flashContent"> 
+								<div id="flashContent">
 									<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" width="380" height="305" id="webcam" align="middle">
 										<param name="movie" value="images/webcam.swf" />
 										<param name="quality" value="high" />
@@ -69,13 +70,13 @@
 											<param name="devicefont" value="false" />
 											<param name="salign" value="" />
 											<param name="allowScriptAccess" value="sameDomain" />
-										<!--<![endif]--> 
-										<!--	<a href="http://www.adobe.com/go/getflash"> 
-												<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /> 
-											</a> --> 
-										<!--[if !IE]>--> 
-										</object> 
-										<!--<![endif]--> 
+										<!--<![endif]-->
+										<!--	<a href="http://www.adobe.com/go/getflash">
+												<img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" />
+											</a> -->
+										<!--[if !IE]>-->
+										</object>
+										<!--<![endif]-->
 									</object>
 								</div>
 							</div>
@@ -98,7 +99,7 @@
 							</div>
 						</div>
 						<div class="round-border">
-							<div id="statement" class="frame" >						
+							<div id="statement" class="frame" >
 							</div>
 						</div>
 					</div>
