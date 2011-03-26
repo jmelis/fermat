@@ -2,6 +2,9 @@
 
 require 'rubygems'
 require 'sinatra'
+require 'models/arduino'
+
+arduino = Arduino.new
 
 set :public, 'web'
 
@@ -15,4 +18,30 @@ end
 
 get '/questions/:question' do
     File.read(File.dirname(__FILE__) + '/web/questions/' + params[:question])
+end
+
+# Arduino API
+get '/arduino/delay/:n' do
+    n = params[:n]
+    arduino.delay(n)
+end
+
+get '/arduino/:action' do
+    action = params[:action]
+    case action
+    when "start"
+        arduino.start
+    when "stop"
+        arduino.stop
+        #TBD: return value
+    when "forward"
+        arduino.forward
+    when "backward"
+        arduino.backward
+    when "toggle"
+        arduino.toggle
+    when "sense"
+        arduino.sense
+        #TBD: return value
+    end
 end
