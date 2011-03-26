@@ -32,8 +32,8 @@ get '/arduino/:action' do
     when "start"
         arduino.start
     when "stop"
-        arduino.stop
-        #TBD: return value
+        steps = arduino.stop
+        steps.to_s
     when "forward"
         arduino.forward
     when "backward"
@@ -41,7 +41,11 @@ get '/arduino/:action' do
     when "toggle"
         arduino.toggle
     when "sense"
-        arduino.sense
-        #TBD: return value
+        sense = arduino.sense?
+        if sense
+            "FORWARD"
+        else
+            "BACKWARD"
+        end
     end
 end
