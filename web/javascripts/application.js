@@ -149,18 +149,24 @@ var app = {
 					$('#information-display p').css({color:'red'}).html('¡Demasiados fallos, siguiente pregunta!').fadeIn(500).fadeOut(3000,function() {
 						$('#code-text').val("");
 						app.loadQuestion();
-						//pone contador marcha atras de 30s por haber fallado
+						//ARDUINO: pone contador marcha atras de 30s por haber fallado
 					});					
 				}
 				// still trying
 				else{
 					$('#code-text').val("");
 					$('#information-display p').css({color:'red'}).html('¡Respuesta incorrecta! Penalización de 30 s').fadeIn(500).fadeOut(3000);
-					$('#progressbar').everyTime(500,'gameTimer',function(i) {
+					$('form').hide();
+					$('#progressbar').show();
+					
+					var stepDelay = 333;
+					
+					$('#progressbar').everyTime(stepDelay,'penaltyTimer',function(i) {
+						console.log(parseInt(100 - i/(300)*stepDelay));
 						$(this).progressbar({
-							value: i/60*100
-						}, 60);
-					});
+							value: parseInt(100 - i/(300)*stepDelay)
+						});
+					}, 30000/stepDelay);
 				}
 			}	
 			return false;
@@ -219,19 +225,7 @@ var app = {
 
 
 $(document).ready(function(){
-	//app.gameBegin();
-	//app.showScrollOnStartButtonClick();
-	//app.showGameConsoleOnArrowClick();
-	var stepDelay = 1000;
-	$('#progressbar').everyTime(stepDelay,'penaltyTimer',function(i) {
-		console.log(i);
-		$(this).progressbar({
-			value: 100 - i/(300)*stepDelay
-		}, 30000/stepDelay);
-	});
-	$('#scroll-wrapper').hide();
-	$('#game-console-wrapper').show();
-	$('#start-wrapper').hide();
-	$('form').hide();
-	$('#progressbar').show();
+	app.gameBegin();
+	app.showScrollOnStartButtonClick();
+	app.showGameConsoleOnArrowClick();
 });
