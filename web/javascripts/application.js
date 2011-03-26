@@ -1,4 +1,5 @@
 var GAME_DURATION = 600;
+var FAIL_PENALTY = 30;
 var WINNING_QUESTIONS = 3;
 var MAX_TRIES = 3;
 
@@ -148,13 +149,24 @@ var app = {
 					$('#information-display p').css({color:'red'}).html('¡Demasiados fallos, siguiente pregunta!').fadeIn(500).fadeOut(3000,function() {
 						$('#code-text').val("");
 						app.loadQuestion();
-						//pone contador marcha atras de 30s por haber fallado
+						//ARDUINO: pone contador marcha atras de 30s por haber fallado
 					});					
 				}
 				// still trying
 				else{
 					$('#code-text').val("");
 					$('#information-display p').css({color:'red'}).html('¡Respuesta incorrecta! Penalización de 30 s').fadeIn(500).fadeOut(3000);
+					$('form').hide();
+					$('#progressbar').show();
+					
+					var stepDelay = 333;
+					
+					$('#progressbar').everyTime(stepDelay,'penaltyTimer',function(i) {
+						console.log(parseInt(100 - i/(300)*stepDelay));
+						$(this).progressbar({
+							value: parseInt(100 - i/(300)*stepDelay)
+						});
+					}, 30000/stepDelay);
 				}
 			}	
 			return false;

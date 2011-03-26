@@ -118,13 +118,17 @@ body{
 				#code-input{
 					height:118px;
 					padding: 0px 33px;
+					position:relative;
 				}
 					#information-display{
-						height:30px;
-						padding:5px 5px 5px 0;
+						height: 20px;
+						padding: 16px 5px 5px 0;
 					}
 					
-					
+					#information-display p{
+						margin:0;
+						text-align: center;
+					}
 					#code-text{
 						width:270px;
 						height:35px;
@@ -155,6 +159,10 @@ body{
 				
 					#code-submit:hover{
 						background-color:#99A6CC;
+					}
+					
+					#progressbar{
+						display:none;
 					}
 		
 			#right-column{
