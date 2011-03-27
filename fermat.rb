@@ -18,6 +18,10 @@ get '/questions/:question' do
     File.read(File.dirname(__FILE__) + '/questions/' + params[:question])
 end
 
+get '/questions/:dir/:question' do
+    File.read(File.dirname(__FILE__) + '/questions/' + params[:dir] + '/'+ params[:question])
+end
+
 # Arduino API
 get '/arduino/delay/:n' do
     n = params[:n]
