@@ -1,4 +1,4 @@
-var GAME_DURATION = 600;
+var GAME_DURATION = 30;
 var FAIL_PENALTY = 30;
 var WINNING_QUESTIONS = 3;
 var MAX_TRIES = 3;
@@ -174,6 +174,7 @@ var app = {
 	gameBegin: function(){
 		$('#scroll-wrapper').hide();
 		$('#game-console-wrapper').hide();
+		$('#win').hide();
 		$('#start-wrapper').fadeIn(4000);
 
 		var counter = 0;
@@ -260,56 +261,77 @@ var app = {
 		$('#webcam').everyTime(1000,'gameTimer',app.timerHandler);
 	},
 
+	win: function(){
+		timer.running = false;
+		$('#visual').html('');
+		$('#statement').html('');
+		
+		$('#game-console-wrapper').fadeOut(4000);
+		$('#win').fadeIn(4000);
+		//arduino go back to initial position
+		$('#webcam').stopTime();
+	},
+
 	die: function(){
-		alert('LA HAS PALMAO');
-		//parar timers
+		timer.running = false;
+		$('#visual').html('');
+		$('#statement').html('');
+		
+		$('#game-console-wrapper').fadeOut(4000);
+		$('#die').fadeIn(4000);
+		//arduino go back to initial position
+		$('#webcam').stopTime();
 	},
 
 	setupListeners: function(){
-		$('#code-submit').click(function() {
-			// question answered right
-			if(question.answer.toLowerCase() == $('#code-text').val().toLowerCase()){
-				right_answers++;
-				// player wins
-				if(right_answers == WINNING_QUESTIONS){
-					//arduino go back to initial position
-					app.win();
-				}
-				//player hasnt won yet
-				else{
-					//arduino stop 30s
-                    clearTimeout(win_timer);
-                    Arduino.stop();
-                    timer.running = false;
-
-					$('#information-display p').css({color:'green'}).html('¡Respuesta correcta! ' + (WINNING_QUESTIONS- right_answers) + ' más para ganar.').fadeIn(500).fadeOut(3000,function() {
-						$('#code-text').val("");
-						app.loadQuestion();
-						win_timer = setTimeout("app.reactivateTimer()",30000-3500); //TBD: quitar chapuza tiempo
-					});
-				}
-			}
-			// question answered wrong
-			else{
-				current_tries ++;
-				// too many tries
-				if(current_tries == 3){
-					$('#information-display p').css({color:'red'}).html('¡Demasiados fallos, siguiente pregunta!').fadeIn(500).fadeOut(3000,function() {
-						$('#code-text').val("");
-						app.loadQuestion();
-                        app.blockCodetext('¡Respuesta incorrecta! Penalización de 30 s');
-					});
-				}
-				// still trying
-				else{
-                    app.blockCodetext('¡Respuesta incorrecta! Penalización de 30 s');
-				}
-			}
-			return false;
-		});
+		$('#code-submit').click(app.codeInput);
+		$('form').submit(app.codeInput);
 	},
 
 	// private
+	codeInput: function() {
+		// question answered right
+		if(question.answer.toLowerCase() == $('#code-text').val().toLowerCase()){
+			right_answers++;
+			// player wins
+			if(right_answers == WINNING_QUESTIONS){
+				//arduino go back to initial position
+				app.win();
+			}
+			//player hasnt won yet
+			else{
+				//arduino stop 30s
+                clearTimeout(win_timer);
+                Arduino.stop();
+                timer.running = false;
+				
+				$('#counter').css({color:'green'});
+				$('#information-display p').css({color:'green'}).html('¡Respuesta correcta! ' + (WINNING_QUESTIONS- right_answers) + ' más para ganar.').fadeIn(500).fadeOut(3000,function() {
+					$('#code-text').val("");
+					app.loadQuestion();
+					win_timer = setTimeout("app.reactivateTimer()",30000-3500); //TBD: quitar chapuza tiempo
+				});
+			}
+		}
+		// question answered wrong
+		else{
+			current_tries ++;
+			// too many tries
+			if(current_tries == 3){
+				$('#information-display p').css({color:'red'}).html('¡Demasiados fallos, siguiente pregunta!').fadeIn(500).fadeOut(3000,function() {
+					$('#code-text').val("");
+					app.loadQuestion();
+                    app.blockCodetext('¡Respuesta incorrecta! Penalización de 30 s');
+				});
+			}
+			// still trying
+			else{
+                app.blockCodetext('¡Respuesta incorrecta! Penalización de 30 s');
+			}
+		}
+		return false;
+	},
+	
 	questionLoader: function(question) {
 		switch(question.kind)
 		{
@@ -356,14 +378,26 @@ var app = {
 	timerHandler: function(){
 		if(timer.running){
 			timer.remaining--;
-			if(timer.remaining<=0)
+			
+			minVar = Math.floor(timer.remaining/60);
+			secVar = timer.remaining % 60;
+			if(secVar<10){
+				secVar='0'+secVar;
+			}
+			
+			$('#counter').html('0'+minVar+':'+secVar);
+			
+			
+			if(timer.remaining<=0){
 				app.die();
+			}
 		}
 	},
 
 	reactivateTimer: function(){
 		Arduino.start();
 		timer.running = true;
+		$('#counter').css({color:'red'});
 	},
 
     blockCodetext: function(msg) {

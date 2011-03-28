@@ -112,8 +112,15 @@ body{
 			}
 		
 				#webcam{
-					height:305px; /* DELETE ALL HEIGHTS */
+					/*height:305px; /* DELETE ALL HEIGHTS */
+					height: 305px;
 				}
+					#counter{
+						color:red;
+						padding-top: 105px;
+						font-size: 80px;
+						text-align: center;
+					}
 			
 				#code-input{
 					height:118px;
@@ -191,6 +198,18 @@ body{
 			height:31px;
 			background:url(window-bottom.png) no-repeat;
 		}
+		
+#win{
+	display:none;
+	text-align: center;
+	padding-top: 200px;
+}
+
+#die{
+	display:none;
+	text-align: center;
+	padding-top: 100px;
+}
 
 .round-border{
 	padding:12px;
