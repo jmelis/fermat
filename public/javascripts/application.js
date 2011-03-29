@@ -1,4 +1,4 @@
-var GAME_DURATION = 30;
+var GAME_DURATION = 600;
 var FAIL_PENALTY = 30;
 var WINNING_QUESTIONS = 3;
 var MAX_TRIES = 3;
@@ -77,7 +77,7 @@ var questions=[
 		file: "acertijo12/acertijo12.png",
 		answer:  "00",
 		kind: "image",
-		text: "Las dos últimas cigras de 14!"
+		text: "Las dos últimas cigfras de 14!"
 	},
     {
 		file: "acertijo13/acertijo13.png",
